@@ -8,18 +8,18 @@ do
   --image-id $ami_id \
   --count 1 \
   --instance-type t3.micro \
-  --security-group-ids sg-0045e5825324c775b \
+  --security-group-ids $sgroup \
   --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$Instan}]" \
   --output text
     )
-    if [ $instance =! "frontend"]; then
+    if [ $Instan =! "frontend"]; then
         ip=$(aws ec2 describe-instances \
-    --instance-ids i-01292ce7d88fc5494 \
+    --instance-ids $instance_id \
     --query 'Reservations[0].Instances[0].PublicIpAddress' \
     --output text)
     else
        ip=$(aws ec2 describe-instances \
-    --instance-ids i-01292ce7d88fc5494 \
+    --instance-ids $instance_id \
     --query 'Reservations[0].Instances[0].PrivateIpAddress' \
     --output text)
     fi
