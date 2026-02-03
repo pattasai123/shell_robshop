@@ -20,7 +20,7 @@ do
     --instance-ids i-01292ce7d88fc5494 \
     --query 'Reservations[0].Instances[0].PrivateIpAddress' \
     --output text)
-    
+    fi
     echo "instance is created and public or prive ip is captured"
 
 done
