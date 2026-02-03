@@ -1,11 +1,11 @@
 #!/bin/bash
-ami-id="ami-0220d79f3f480ecf5"
+ami_id="ami-0220d79f3f480ecf5"
 sgroup="sg-0045e5825324c775b"
 
 for Instan in $@
 do
     instance_id=$(aws ec2 run-instances \
-  --image-id ami-0220d79f3f480ecf5 \
+  --image-id $ami_id \
   --count 1 \
   --instance-type t3.micro \
   --security-group-ids sg-0045e5825324c775b \
