@@ -29,20 +29,20 @@ do
     fi
 
     echo "Instance $Instan created with IP: $ip"
-
+    
     aws route53 change-resource-record-sets \
   --hosted-zone-id Z0632960L2KEBIQGF3BU \
   --change-batch '
   {
     "Comment": "Testing creating a record set"
     ,"Changes": [{
-      "Action"              : "UPSERT"
+      "Action"              : "CREATE"
       ,"ResourceRecordSet"  : {
         "Name"              : "' $recordname'"
         ,"Type"             : "A"
         ,"TTL"              : 1
         ,"ResourceRecords"  : [{
-            "Value"         : "'" $ip "'"
+            "Value"         : "' $ip '"
         }]
       }
     }]
