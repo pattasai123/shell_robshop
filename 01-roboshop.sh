@@ -32,20 +32,18 @@ do
     
     aws route53 change-resource-record-sets \
   --hosted-zone-id Z0632960L2KEBIQGF3BU \
-  --change-batch '
-  {
-    "Comment": "Testing creating a record set"
-    ,"Changes": [{
-      "Action"              : "CREATE"
-      ,"ResourceRecordSet"  : {
-        "Name"              : "' $recordname'"
-        ,"Type"             : "A"
-        ,"TTL"              : 1
-        ,"ResourceRecords"  : [{
-            "Value"         : "' $ip '"
+  --change-batch "{
+    \"Comment\": \"Testing creating a record set\",
+    \"Changes\": [{
+      \"Action\": \"CREATE\",
+      \"ResourceRecordSet\": {
+        \"Name\": \"$recordname\",
+        \"Type\": \"A\",
+        \"TTL\": 1,
+        \"ResourceRecords\": [{
+          \"Value\": \"$ip\"
         }]
       }
     }]
-  }
-  '
+  }"
 done
