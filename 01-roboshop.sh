@@ -1,7 +1,7 @@
 #!/bin/bash
 ami_id="ami-0220d79f3f480ecf5"
 sgroup="sg-0045e5825324c775b"
-
+dname="bongu.onine"
 for Instan in $@
 do
     instance_id=$(aws ec2 run-instances \
@@ -19,13 +19,33 @@ do
           --instance-ids $instance_id \
           --query 'Reservations[0].Instances[0].PublicIpAddress' \
           --output text)
+          recordname="$Instan.$dname"
     else
         ip=$(aws ec2 describe-instances \
           --instance-ids $instance_id \
           --query 'Reservations[0].Instances[0].PrivateIpAddress' \
           --output text)
+          recordname="$dname"
     fi
 
     echo "Instance $Instan created with IP: $ip"
 
+    aws route53 change-resource-record-sets \
+  --hosted-zone-id Z0632960L2KEBIQGF3BU \
+  --change-batch '
+  {
+    "Comment": "Testing creating a record set"
+    ,"Changes": [{
+      "Action"              : "UPSERT"
+      ,"ResourceRecordSet"  : {
+        "Name"              : "' $recordname'"
+        ,"Type"             : "A"
+        ,"TTL"              : 1
+        ,"ResourceRecords"  : [{
+            "Value"         : "'" $ip "'"
+        }]
+      }
+    }]
+  }
+  '
 done
