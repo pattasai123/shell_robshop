@@ -4,7 +4,7 @@ user=$(id -u)
 
 if [ $user -ne 0 ]; then
     echo "ERROR:: please run this with root access"
-    exit
+    exit 1
 fi
 r="\e[32m"
 g="\e[33m"
