@@ -1,7 +1,7 @@
 #!/bin/bash
 ami_id="ami-0220d79f3f480ecf5"
 sgroup="sg-0045e5825324c775b"
-dname="bongu.onine"
+dname="bongu.online"
 for Instan in $@
 do
     instance_id=$(aws ec2 run-instances \
