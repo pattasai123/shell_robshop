@@ -11,6 +11,7 @@ g="\e[33m"
 folder="/var/log/shell_roboshop"
 file=$(echo $0| cut -d "." -f1)
 filename="$folder/$file.log"
+pwd=$PWD
 mkdir -p $folder
 validate(){
     if [ $1 -eq 0 ]; then
@@ -21,9 +22,9 @@ validate(){
     fi
 }
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+val=$(cp mongo.repo /etc/yum.repos.d/mongo.repo)
 dnf list installed nodejs
-if [ $? -eq 0 ]; then
+if [ $val -eq 0 ]; then
     dnf remove nodejs -y &>> $filename
 fi
 dnf module disable nodejs -y &>> $filename
@@ -42,15 +43,17 @@ mkdir -p /app
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
 
 cd /app 
-unzip /tmp/catalogue.zip
+unzip $pwd/tmp/catalogue.zip
 cd /app 
 npm install 
 cp catalogue.service /etc/systemd/system/catalogue.service
 
 systemctl daemon-reload &>> $filename
-
+validate $? "daemon-reload"
 systemctl enable catalogue &>> $filename
+validate $? "enable catalogue"
 systemctl start catalogue &>> $filename
+validate $? "start catalogue"
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 
