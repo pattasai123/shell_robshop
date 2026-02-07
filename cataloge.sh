@@ -63,7 +63,7 @@ cp $pwd/mongo.repo /etc/yum.repos.d/mongo.repo
 
 dnf install mongodb-mongosh -y &>> $filename
 
-index=$(mongosh mongodb.bongu.online --quiet --evel "db.getMongo().getDBnames().indexOf('catalogue')")
+index=$(mongosh mongodb.bongu.online --quiet --eval "db.getMongo().getDBnames().indexOf('catalogue')")
 if [ $? -le 0 ];then 
     mongosh --host mongodb.bongu.online </app/db/master-data.js &>> $filename
 else
