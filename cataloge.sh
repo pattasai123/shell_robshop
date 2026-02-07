@@ -34,7 +34,7 @@ validate $? "disableing nodejs"
 dnf module enable nodejs:20 -y &>> $filename
 validate $? "Enableing 20 nodejs"
 
-dnf install nodejs -y  &>> $filename
+dnf install nodejs -y  &>/dev/null
 validate $? "installing nodejs"
 id roboshop &>> $filename
 if [ $? -ne 0 ]; then
