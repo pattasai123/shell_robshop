@@ -15,15 +15,15 @@ do
     )
 
     if [ "$Instan" != "frontend" ]; then
-        ip=$(aws ec2 describe-instances \
+        ip=$( aws ec2 describe-instances \
           --instance-ids $instance_id \
-          --query 'Reservations[0].Instances[0].PublicIpAddress' \
-          --output text)
+          --query 'Reservations[0].Instances[0].PrivateIpAddress' \
+          --output text )
           recordname="$Instan.$dname"
     else
         ip=$(aws ec2 describe-instances \
           --instance-ids $instance_id \
-          --query 'Reservations[0].Instances[0].PrivateIpAddress' \
+          --query 'Reservations[0].Instances[0].PublicIpAddress' \
           --output text)
           recordname="$dname"
     fi
