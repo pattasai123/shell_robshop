@@ -22,8 +22,10 @@ validate(){
     fi
 }
 
-val=$(dnf list installed nodejs)
-if [ $val -eq 0 ]; then
+
+dnf list installed nodejs &>/dev/null
+
+if [ $? -eq 0 ]; then
     dnf remove nodejs -y &>> $filename
 fi
 dnf module disable nodejs -y &>> $filename
@@ -34,12 +36,14 @@ validate $? "Enableing 20 nodejs"
 
 dnf install nodejs -y  &>> $filename
 validate $? "installing nodejs"
-
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-
+if [ id roboshop -ne 0]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+else
+    echo -e "$r skipping already exist"
+fi
 mkdir -p /app 
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>> $filename
 
 cd /app 
 rm -rf /app/*
