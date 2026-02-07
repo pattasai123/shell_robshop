@@ -38,7 +38,7 @@ dnf install nodejs -y  &>/dev/null
 validate $? "installing nodejs"
 id roboshop &>> $filename
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $filename
 else
     echo -e "$r skipping already exist"
 fi
