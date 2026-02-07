@@ -36,7 +36,7 @@ validate $? "Enableing 20 nodejs"
 
 dnf install nodejs -y  &>> $filename
 validate $? "installing nodejs"
-id roboshop
+id roboshop &>> $filename
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 else
@@ -63,9 +63,11 @@ cp $pwd/mongo.repo /etc/yum.repos.d/mongo.repo
 
 dnf install mongodb-mongosh -y &>> $filename
 
-mongosh --host mongodb.bongu.online </app/db/master-data.js
-
-mongosh --host mongodb.bongu.online
-
+index=$(mongosh mongodb.bongu.online --quiet --evel "db.getMongo().getDBnames().indexOf('catalogue')")
+if [ $? -le 0 ];then 
+    mongosh --host mongodb.bongu.online </app/db/master-data.js &>> $filename
+else
+    echo -e "$g we are skiping already exit "
+fi
 systemctl restart catalogue &>> $filename
 validate $? "start catalogue"
