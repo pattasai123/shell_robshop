@@ -36,7 +36,8 @@ validate $? "Enableing 20 nodejs"
 
 dnf install nodejs -y  &>> $filename
 validate $? "installing nodejs"
-if [ id roboshop -ne 0]; then
+id roboshop
+if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 else
     echo -e "$r skipping already exist"
