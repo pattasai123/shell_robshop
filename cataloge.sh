@@ -15,15 +15,14 @@ pwd=$PWD
 mkdir -p $folder
 validate(){
     if [ $1 -eq 0 ]; then
-        echo -e "$2...$r success $g" | tee -a $filename
+        echo -e "$2... $r success $g" | tee -a $filename
     else 
         echo -e "$2 ... $r Failure $g " | tee -a $filename
         exit 1
     fi
 }
 
-val=$(cp mongo.repo /etc/yum.repos.d/mongo.repo)
-dnf list installed nodejs
+val=$(dnf list installed nodejs)
 if [ $val -eq 0 ]; then
     dnf remove nodejs -y &>> $filename
 fi
@@ -43,22 +42,25 @@ mkdir -p /app
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
 
 cd /app 
-unzip $pwd/tmp/catalogue.zip
-cd /app 
-npm install 
-cp catalogue.service /etc/systemd/system/catalogue.service
+rm -rf /app/*
+unzip /tmp/catalogue.zip &>> $filename
+npm install &>> $filename
+cp $pwd/catalogue.service /etc/systemd/system/catalogue.service
 
 systemctl daemon-reload &>> $filename
 validate $? "daemon-reload"
+
 systemctl enable catalogue &>> $filename
 validate $? "enable catalogue"
-systemctl start catalogue &>> $filename
-validate $? "start catalogue"
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+
+cp $pwd/mongo.repo /etc/yum.repos.d/mongo.repo
 
 dnf install mongodb-mongosh -y &>> $filename
 
 mongosh --host mongodb.bongu.online </app/db/master-data.js
 
 mongosh --host mongodb.bongu.online
+
+systemctl restart catalogue &>> $filename
+validate $? "start catalogue"
