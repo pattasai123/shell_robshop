@@ -35,7 +35,7 @@ do
   --change-batch "{
     \"Comment\": \"Testing creating a record set\",
     \"Changes\": [{
-      \"Action\": \"CREATE\",
+      \"Action\": \"UPSERT\",
       \"ResourceRecordSet\": {
         \"Name\": \"$recordname\",
         \"Type\": \"A\",
