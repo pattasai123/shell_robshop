@@ -21,7 +21,7 @@ validate(){
     fi
 }
 
-cp pwd/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
+cp $pwd/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
 dnf install rabbitmq-server -y &>> $filename
 validate $? "Installing rabbit-server"
 systemctl enable rabbitmq-server &>> $filename
