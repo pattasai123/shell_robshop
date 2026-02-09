@@ -41,7 +41,7 @@ cd /app
 go mod init dispatch &>> $filename
 go get &>> $filename 
 go build &>> $filename
-cp $pwd/payment.service /etc/systemd/system/payment.service
+cp $pwd/dispatch.service /etc/systemd/system/dispatch.service
 
 systemctl daemon-reload &>> $filename
 validate $? "daemon-reload"
