@@ -44,7 +44,7 @@ else
 fi
 mkdir -p /app 
 
-curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>> $filename
+curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>> $filename
 
 cd /app 
 rm -rf /app/*
