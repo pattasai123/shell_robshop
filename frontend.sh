@@ -45,7 +45,7 @@ curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v
 cd /usr/share/nginx/html &>> $filename
 unzip /tmp/frontend.zip &>> $filename
 
-cp pwd/nginx.conf /etc/nginx/nginx.conf
+cp $pwd/nginx.conf /etc/nginx/nginx.conf
 
 systemctl restart nginx  &>> $filename
 validate $? "restart nginx"
