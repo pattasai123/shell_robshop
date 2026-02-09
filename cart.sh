@@ -55,8 +55,8 @@ cp $pwd/cart.service /etc/systemd/system/cart.service
 systemctl daemon-reload &>> $filename
 validate $? "daemon-reload"
 
-systemctl enable catalogue &>> $filename
+systemctl enable cart &>> $filename
 validate $? "enable cart"
 
-systemctl restart catalogue &>> $filename
+systemctl restart cart &>> $filename
 validate $? "start cart"
