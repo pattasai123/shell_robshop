@@ -56,7 +56,7 @@ systemctl daemon-reload &>> $filename
 validate $? "daemon-reload"
 
 systemctl enable cart &>> $filename
-validate $? "enable cart"
+validate $? "enable user"
 
 systemctl restart cart &>> $filename
-validate $? "start cart"
+validate $? "start user"
