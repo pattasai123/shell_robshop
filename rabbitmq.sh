@@ -11,6 +11,7 @@ g="\e[33m"
 folder="/var/log/shell_roboshop"
 file=$(echo $0| cut -d "." -f1)
 filename="$folder/$file.log"
+pwd=$(PWD)
 mkdir -p $folder
 validate(){
     if [ $1 -eq 0 ]; then
