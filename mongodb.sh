@@ -29,4 +29,4 @@ validate $? "Enableing mongodb"
 systemctl start mongod  &>> $filename
 validate $? "Starting mongodb"
 
-sed "s/127.0.0.0/0.0.0.0/" /etc/mongod.conf
+sed -i "s/127.0.0.0/0.0.0.0/g" /etc/mongod.conf
