@@ -28,3 +28,5 @@ systemctl enable mongod &>> $filename
 validate $? "Enableing mongodb"
 systemctl start mongod  &>> $filename
 validate $? "Starting mongodb"
+
+sed "s/127.0.0.0/0.0.0.0/" /etc/mongod.conf
