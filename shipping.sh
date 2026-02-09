@@ -41,7 +41,7 @@ unzip /tmp/shipping.zip &>> $filename
 cd /app 
 mvn clean package &>> $filename
 mv target/shipping-1.0.jar shipping.jar &>> $filename
-
+cp $pwd/shipping.service /etc/systemd/system/shipping.service
 systemctl daemon-reload &>> $filename
 validate $? "daemon-reload"
 
