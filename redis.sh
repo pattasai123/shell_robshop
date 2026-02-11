@@ -28,7 +28,10 @@ dnf module enable redis:7 -y &>> $filename
 validate $? "enable redis"
 dnf install redis -y &>> $filename
 validate $? "Installing redis"
-sed -i -e "s/127.0.0.1/0.0.0.0/g" -e "/protected-mode/ c protected-mode no" /etc/redis/redis.conf
+sed -i -e "s/^bind .*/bind 0.0.0.0/" \
+            -e "s/^protected-mode .*/protected-mode no/" \
+            /etc/redis/redis.conf
+
 systemctl enable redis &>> $filename
 validate $? "Enableing redis"
 systemctl start redis  &>> $filename
